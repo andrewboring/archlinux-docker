@@ -1,5 +1,5 @@
-DOCKER_USER:=pierres
-DOCKER_ORGANIZATION=archlinux
+DOCKER_USER:=andrewboring
+DOCKER_ORGANIZATION=a10g
 DOCKER_IMAGE:=base
 
 rootfs:

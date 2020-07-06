@@ -1,0 +1,1 @@
+DISTCC_ARGS="--allow-private --log-file /tmp/distccd.log"

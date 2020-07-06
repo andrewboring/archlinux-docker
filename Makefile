@@ -1,6 +1,6 @@
 DOCKER_USER:=andrewboring
 DOCKER_ORGANIZATION=a10g
-DOCKER_IMAGE:=base
+DOCKER_IMAGE:=archlinux-x86_64-distcc-arm
 
 rootfs:
 	$(eval TMPDIR := $(shell mktemp -d))

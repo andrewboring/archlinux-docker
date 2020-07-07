@@ -3,5 +3,6 @@ tar
 gzip
 pacman
 systemd
-base-devel
+gcc
+make
 distcc

@@ -1,5 +1,4 @@
-FROM scratch
-ADD archlinux.tar /
+FROM a10g/archlinux-x86_64-base
 ENV LANG=en_US.UTF-8
-EXPOSE 3932/tcp
-CMD ["/usr/bin/distcc-init.sh"]
+RUN pacman -Syu --noconfirm && pacman -S distcc gcc make --noconfirm
+ENTRYPOINT ["/usr/bin/bash"]

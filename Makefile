@@ -1,29 +1,29 @@
 DOCKER_USER:=andrewboring
 DOCKER_ORGANIZATION=a10g
-DOCKER_IMAGE:=archlinux-x86_64-distcc-armv7h
+DOCKER_IMAGE:=archlinux-x86_64-distcc
 
-getfiles:
+#getfiles:
 	#curl -O https://archlinuxarm.org/builder/xtools/x-tools6h.tar.xz
-	curl -O https://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
+	#curl -O https://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
 	#curl -O https://archlinuxarm.org/builder/xtools/x-tools8.tar.xz
 
-rootfs: getfiles
+rootfs: 
 	$(eval TMPDIR := $(shell mktemp -d))
-	cp /usr/share/devtools/pacman-extra.conf rootfs/etc/pacman.conf
-	cat pacman-conf.d-noextract.conf >> rootfs/etc/pacman.conf
-	env -i pacstrap -C rootfs/etc/pacman.conf -c -d -G -M $(TMPDIR) $(shell cat packages)
+	#cp /usr/share/devtools/pacman-extra.conf rootfs/etc/pacman.conf
+	#cat pacman-conf.d-noextract.conf >> rootfs/etc/pacman.conf
+	#env -i pacstrap -C rootfs/etc/pacman.conf -c -d -G -M $(TMPDIR) $(shell cat packages)
 	mkdir -p rootfs/var/distcc
 	cp --recursive --preserve=timestamps --backup --suffix=.pacnew rootfs/* $(TMPDIR)/
 	#tar -xJf x-tools6h.tar.xz -C $(TMPDIR)/var/distcc/
-	tar -xJf x-tools7h.tar.xz -C $(TMPDIR)/var/distcc/
+	#tar -xJf x-tools7h.tar.xz -C $(TMPDIR)/var/distcc/
 	#tar -xJf x-tools8.tar.xz -C $(TMPDIR)/var/distcc/
-	arch-chroot $(TMPDIR) locale-gen
-	arch-chroot $(TMPDIR) pacman-key --init
-	arch-chroot $(TMPDIR) pacman-key --populate archlinux
+	#arch-chroot $(TMPDIR) locale-gen
+	#arch-chroot $(TMPDIR) pacman-key --init
+	#arch-chroot $(TMPDIR) pacman-key --populate archlinux
 	tar --numeric-owner --xattrs --acls --exclude-from=exclude -C $(TMPDIR) -c . -f archlinux.tar
 	rm -rf $(TMPDIR)
 
-docker-image: rootfs
+docker-image: 
 	docker build -t $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE) .
 
 docker-image-test: docker-image

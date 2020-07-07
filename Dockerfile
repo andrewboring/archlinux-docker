@@ -1,4 +1,5 @@
 FROM scratch
 ADD archlinux.tar /
 ENV LANG=en_US.UTF-8
-CMD ["/usr/bin/bash"]
+EXPOSE 3932/tcp
+CMD ["/usr/bin/distcc-init.sh"]

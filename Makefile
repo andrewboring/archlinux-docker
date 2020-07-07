@@ -1,13 +1,22 @@
 DOCKER_USER:=andrewboring
 DOCKER_ORGANIZATION=a10g
-DOCKER_IMAGE:=archlinux-x86_64-distcc-arm
+DOCKER_IMAGE:=archlinux-x86_64-distcc-armv7h
 
-rootfs:
+getfiles:
+	#curl -O https://archlinuxarm.org/builder/xtools/x-tools6h.tar.xz
+	curl -O https://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
+	#curl -O https://archlinuxarm.org/builder/xtools/x-tools8.tar.xz
+
+rootfs: getfiles
 	$(eval TMPDIR := $(shell mktemp -d))
 	cp /usr/share/devtools/pacman-extra.conf rootfs/etc/pacman.conf
 	cat pacman-conf.d-noextract.conf >> rootfs/etc/pacman.conf
 	env -i pacstrap -C rootfs/etc/pacman.conf -c -d -G -M $(TMPDIR) $(shell cat packages)
+	mkdir -p rootfs/var/distcc
 	cp --recursive --preserve=timestamps --backup --suffix=.pacnew rootfs/* $(TMPDIR)/
+	#tar -xJf x-tools6h.tar.xz -C $(TMPDIR)/var/distcc/
+	tar -xJf x-tools7h.tar.xz -C $(TMPDIR)/var/distcc/
+	#tar -xJf x-tools8.tar.xz -C $(TMPDIR)/var/distcc/
 	arch-chroot $(TMPDIR) locale-gen
 	arch-chroot $(TMPDIR) pacman-key --init
 	arch-chroot $(TMPDIR) pacman-key --populate archlinux

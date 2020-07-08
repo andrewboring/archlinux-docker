@@ -1,6 +1,6 @@
 DOCKER_USER:=andrewboring
 DOCKER_ORGANIZATION=a10g
-DOCKER_IMAGE:=archlinux-x86_64-distcc
+DOCKER_IMAGE:=archlinux-x86_64-distcc-armv7h
 
 #getfiles:
 	#curl -O https://archlinuxarm.org/builder/xtools/x-tools6h.tar.xz
